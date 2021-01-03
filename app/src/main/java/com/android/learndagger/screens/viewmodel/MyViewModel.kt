@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.android.learndagger.questions.FetchQuestionsUseCase
 import com.android.learndagger.questions.Question
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MyViewModel(
+class MyViewModel @Inject constructor(
         private val fetchQuestionsUseCase: FetchQuestionsUseCase
 ):ViewModel() {
     private val _data = MutableLiveData<List<Question>>()
