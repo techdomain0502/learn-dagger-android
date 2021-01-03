@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.android.learndagger.R
 import com.android.learndagger.screens.common.ScreensNavigator
 import com.android.learndagger.screens.common.activities.BaseActivity
@@ -19,9 +21,11 @@ class ViewModelActivity:BaseActivity() {
 
     private lateinit var toolbar: MyToolbar
 
-    @Inject
+
     lateinit var viewModel: MyViewModel
 
+    @Inject
+    lateinit var myviewmodelFactory: MyViewModel.Factory
     override fun onCreate(savedInstanceState: Bundle?) {
         injector.inject(this)
         super.onCreate(savedInstanceState)
@@ -32,6 +36,8 @@ class ViewModelActivity:BaseActivity() {
         toolbar.setNavigateUpListener {
             screensNavigator.navigateBack()
         }
+
+        viewModel = ViewModelProvider(this,myviewmodelFactory).get(MyViewModel::class.java)
 
         viewModel.data.observe(this, Observer {
             Toast.makeText(this,"fetched ${it.size} question",Toast.LENGTH_SHORT).show()

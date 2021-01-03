@@ -1,14 +1,14 @@
 package com.android.learndagger.screens.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.android.learndagger.common.dependnecyinjection.presentation.PresentationScope
 import com.android.learndagger.questions.FetchQuestionsUseCase
 import com.android.learndagger.questions.Question
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Provider
+import javax.inject.Singleton
 
 class MyViewModel @Inject constructor(
         private val fetchQuestionsUseCase: FetchQuestionsUseCase
@@ -28,5 +28,12 @@ class MyViewModel @Inject constructor(
          }
    }
 
+
+    class Factory @Inject constructor(private val fetchQuestionsUseCaseProvider: Provider<FetchQuestionsUseCase>):ViewModelProvider.Factory{
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return MyViewModel(fetchQuestionsUseCaseProvider.get()) as T
+        }
+
+    }
 
 }
