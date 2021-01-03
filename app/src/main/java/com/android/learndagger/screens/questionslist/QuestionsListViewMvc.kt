@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.learndagger.R
 import com.android.learndagger.questions.Question
+import com.android.learndagger.screens.common.toolbar.MyToolbar
 import com.android.learndagger.screens.common.viewsmvc.BaseViewMvc
 
 class QuestionsListViewMvc(
@@ -23,11 +24,13 @@ class QuestionsListViewMvc(
     interface Listener {
         fun onRefreshClicked()
         fun onQuestionClicked(clickedQuestion: Question)
+        fun onViewModelClicked()
     }
 
     private val swipeRefresh: SwipeRefreshLayout
     private val recyclerView: RecyclerView
     private val questionsAdapter: QuestionsAdapter
+    private val toolbar:MyToolbar
 
     init {
         // init pull-down-to-refresh
@@ -47,6 +50,13 @@ class QuestionsListViewMvc(
             }
         }
         recyclerView.adapter = questionsAdapter
+
+        toolbar = findViewById(R.id.toolbar)
+        toolbar.setViewModelListener {
+            for (listener in listeners){
+                listener.onViewModelClicked()
+            }
+        }
     }
 
     fun bindQuestions(questions: List<Question>) {
