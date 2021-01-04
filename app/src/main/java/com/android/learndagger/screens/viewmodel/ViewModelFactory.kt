@@ -5,22 +5,17 @@ import androidx.lifecycle.ViewModelProvider
 import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlin.reflect.KClass
 
 
-    class ViewModelFactory @Inject constructor(private val myViewModelProvider: Provider<MyViewModel>,
-    private val myViewModel2Provider: Provider<MyViewModel2>
-                                               ): ViewModelProvider.Factory{
+class ViewModelFactory @Inject
+    constructor(
+            private val providers:Map<Class<out ViewModel>,@JvmSuppressWildcards Provider<ViewModel>>): ViewModelProvider.Factory{
+
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return when(modelClass){
-                 MyViewModel::class.java ->{
-                     return myViewModelProvider.get() as T
-                 }
-                MyViewModel2::class.java ->{
-                    return myViewModel2Provider.get() as T
-                }
-                else ->
-                    throw RuntimeException("no provider present to get view model "+modelClass)
-            }
+
+            val provider = providers[modelClass]
+            return provider?.get() as T ?: throw RuntimeException("no provider present to get view model "+modelClass)
         }
 
     }

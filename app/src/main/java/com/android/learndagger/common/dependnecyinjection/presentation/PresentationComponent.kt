@@ -6,7 +6,7 @@ import com.android.learndagger.screens.viewmodel.ViewModelActivity
 import dagger.Subcomponent
 
 @PresentationScope
-@Subcomponent(modules = [UiModule::class,QuestionModule::class])
+@Subcomponent(modules = [UiModule::class,QuestionModule::class,ViewModelsModule::class])
 interface PresentationComponent {
     
    fun inject(questionDetailsActivity: QuestionDetailsActivity)

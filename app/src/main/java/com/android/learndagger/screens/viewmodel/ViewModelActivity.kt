@@ -25,7 +25,7 @@ class ViewModelActivity:BaseActivity() {
 
 
     lateinit var viewModel: MyViewModel
-    lateinit var viewModel2:MyViewModel2
+    private lateinit var viewModel2:MyViewModel2
 
     @Inject
     lateinit var myviewmodelFactory: ViewModelFactory
