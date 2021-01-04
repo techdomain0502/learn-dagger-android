@@ -10,13 +10,13 @@ import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
 
-class MyViewModel @Inject constructor(
+class MyViewModel2 @Inject constructor(
         private val fetchQuestionsUseCase: FetchQuestionsUseCase
 ):ViewModel() {
     private val _data = MutableLiveData<List<Question>>()
     val data:LiveData<List<Question>> = _data
 
-    private val TAG = MyViewModel::class.simpleName
+    private val TAG = MyViewModel2::class.simpleName
    init {
          viewModelScope.launch {
              val result = fetchQuestionsUseCase.fetchLatestQuestions()
@@ -27,6 +27,8 @@ class MyViewModel @Inject constructor(
              }
          }
    }
+
+
 
 
 }

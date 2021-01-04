@@ -25,9 +25,10 @@ class ViewModelActivity:BaseActivity() {
 
 
     lateinit var viewModel: MyViewModel
+    lateinit var viewModel2:MyViewModel2
 
     @Inject
-    lateinit var myviewmodelFactory: MyViewModel.Factory
+    lateinit var myviewmodelFactory: ViewModelFactory
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +43,8 @@ class ViewModelActivity:BaseActivity() {
         }
 
         viewModel = ViewModelProvider(this,myviewmodelFactory).get(MyViewModel::class.java)
-        Log.d("sachin","view model hashcode = "+viewModel.hashCode())
+        viewModel2 = ViewModelProvider(this,myviewmodelFactory).get(MyViewModel2::class.java)
+        Log.d("sachin","view model hashcode = "+viewModel.hashCode()+" "+viewModel2.hashCode())
 
         viewModel.data.observe(this, Observer {
             Toast.makeText(this,"fetched ${it.size} question",Toast.LENGTH_SHORT).show()
